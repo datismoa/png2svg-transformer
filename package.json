@@ -1,0 +1,17 @@
+{
+  "name": "png2svg-transformer",
+  "version": "1.0.0",
+  "type": "module",
+  "author": "datismoa",
+  "license": "ISC",
+  "dependencies": {
+    "cli-progress": "^3.12.0",
+    "execa": "^8.0.1",
+    "playwright": "^1.40.1",
+    "yargs": "^17.7.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.3",
+    "@types/yargs": "^17.0.32"
+  }
+}
