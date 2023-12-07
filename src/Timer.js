@@ -45,9 +45,3 @@ export class Timer {
     }
   }
 }
-
-// const timer = new Timer({ duration: 3000 })
-
-// const { abortController, timerProcess } = timer.start()
-
-// timerProcess.then(console.log)
