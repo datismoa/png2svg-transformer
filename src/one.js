@@ -44,7 +44,7 @@ async function start() {
     state.httpResponseCodes.push(response.status())
   })
 
-  await page.goto('https://vectorizer.ai/')
+  await page.goto('https://vectorizer.ai')
 
   const fileChooserPromise = page.waitForEvent('filechooser')
 
@@ -54,9 +54,28 @@ async function start() {
 
   await fileChooser.setFiles(argv.filePath)
 
-  await page.waitForSelector('#App-ImageView-RightCanvas')
+  const $cropButton = '.PreCrop-Sidebar-crop_button'
+  const $rightCanvas = '#App-ImageView-RightCanvas'
+  const $cropButtonClassName = 'PreCrop-Sidebar-crop_button bttn bttn_dark'
+  const $downloadLink = '#App-DownloadLink'
 
-  await page.locator('#App-DownloadLink').click()
+  const result = await Promise.race([
+    page.waitForSelector($cropButton),
+    page.waitForSelector($rightCanvas),
+  ])
+
+  const a = await result.getProperty('className')
+  const b = await a.jsonValue()
+
+  if (b === $cropButtonClassName) {
+    await page.locator($cropButton).click()
+
+    await page.waitForSelector($rightCanvas)
+
+    await page.locator($downloadLink).click()
+  } else {
+    await page.locator($downloadLink).click()
+  }
 
   const downloadPromise = page.waitForEvent('download')
 
